@@ -1,5 +1,6 @@
 import path from "path";
 import express, { Express, NextFunction, Response } from "express";
+import mailboxesRouter from "./routes/mailboxesRouter";
 
 const PORT = 80;
 
@@ -9,15 +10,18 @@ app.use(express.json());
 
 app.use("/", express.static(path.join(__dirname, "../../client/dist")));
 
-app.use(function (_, response: Response, next: NextFunction) {
-  response.header("Access-Control-Allow-Origin", "*");
-  response.header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
-  response.header(
+app.use(function (_, res: Response, next: NextFunction) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+  res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
+
   next();
 });
+
+app.use(mailboxesRouter);
 
 app.listen(PORT, () => {
   console.log(`Server started and running on port ${PORT}`);
