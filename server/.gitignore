@@ -1,0 +1,8 @@
+# Dependency directories
+node_modules/
+
+# Compiled js
+dist/
+
+# Server info
+serverInfo.json
