@@ -14,6 +14,23 @@ export interface IMailbox {
   children?: IMailbox[];
 }
 
+export interface ICallOptions {
+  mailbox: string;
+  id?: number;
+}
+
+export interface IMessage {
+  id: string;
+  date: string;
+  from: string;
+  subject: string;
+  body?: string;
+}
+
+export interface IMailboxInfo {
+  exists: number;
+}
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 export class Worker {
@@ -22,7 +39,7 @@ export class Worker {
   constructor(serverInfo: IServerInfo) {
     Worker.serverInfo = serverInfo;
   }
-  
+
   private async connectToServer(): Promise<IImapClient> {
     const client: IImapClient = new ImapClient.default(
       Worker.serverInfo.imap.host,
@@ -63,5 +80,38 @@ export class Worker {
     iterateChildren(mailboxes.children);
 
     return finalMailboxes;
+  }
+
+  public async listMessages(callOptions: ICallOptions): Promise<IMessage[]> { 
+    const client: IImapClient = await this.connectToServer();
+    const mailbox: IMailboxInfo = await client.selectMailbox(callOptions.mailbox);
+
+    if (mailbox.exists === 0) {
+      await client.close();
+      return [];
+    }
+
+    const messages: any[] = await client.listMessages(
+      callOptions.mailbox,
+      "1:*",
+      ["uid", "envelope"]
+    );
+
+    await client.close();
+
+    const finalMessages: IMessage[] = [];
+
+    messages.forEach((message: any) => {
+      const { uid, envelope } = message;
+
+      finalMessages.push({
+        id: uid,
+        date: envelope.date,
+        from: envelope.from[0].address,
+        subject: envelope.subject,
+      });
+    });
+
+    return finalMessages;
   }
 }
