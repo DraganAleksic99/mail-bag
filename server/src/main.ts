@@ -1,6 +1,7 @@
 import path from "path";
 import express, { Express, NextFunction, Response } from "express";
 import mailboxesRouter from "./routes/mailboxesRouter";
+import messagesRouter from "./routes/messagesRouter";
 
 const PORT = 80;
 
@@ -22,6 +23,7 @@ app.use(function (_, res: Response, next: NextFunction) {
 });
 
 app.use(mailboxesRouter);
+app.use(messagesRouter);
 
 app.listen(PORT, () => {
   console.log(`Server started and running on port ${PORT}`);
