@@ -67,13 +67,22 @@ export class Worker {
     const finalMailboxes: IMailbox[] = [];
 
     const iterateChildren = (children: IMailbox[]): void => {
-      children.forEach((child: IMailbox) => {
-        finalMailboxes.push({
-          name: child.name,
-          path: child.path,
-        });
+      children.forEach(({ name, path, children}: IMailbox) => {
+        if (name !== "[Gmail]") {
+          if (name === "INBOX") {
+            finalMailboxes.push({
+              name: "Inbox",
+              path: "inbox",
+            });
+          } else {
+            finalMailboxes.push({
+              name: name,
+              path: path.toLowerCase(),
+            });
+          }
+        }
 
-        child.children && iterateChildren(child.children);
+        children && iterateChildren(children);
       });
     };
 
@@ -82,9 +91,11 @@ export class Worker {
     return finalMailboxes;
   }
 
-  public async listMessages(callOptions: ICallOptions): Promise<IMessage[]> { 
+  public async listMessages(callOptions: ICallOptions): Promise<IMessage[]> {
     const client: IImapClient = await this.connectToServer();
-    const mailbox: IMailboxInfo = await client.selectMailbox(callOptions.mailbox);
+    const mailbox: IMailboxInfo = await client.selectMailbox(
+      callOptions.mailbox
+    );
 
     if (mailbox.exists === 0) {
       await client.close();
