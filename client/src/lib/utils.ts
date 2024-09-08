@@ -4,3 +4,7 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+export function capitalizeString([firstLetter, ...rest]: string) {
+  return firstLetter.toUpperCase() + rest.join("");
+}
