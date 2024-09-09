@@ -2,6 +2,11 @@ import { createRootRoute } from "@tanstack/react-router";
 import { BaseLayout } from "@/components/base-layout";
 import { BaseLayoutSkeleton } from "@/components/base-layout-skeleton";
 
+export type Mailbox = {
+  name: string;
+  path: string;
+}
+
 export const Route = createRootRoute({
   loader: async ({ abortController }) => {
     const response = await fetch("http://localhost:80/mailboxes", {
@@ -13,7 +18,7 @@ export const Route = createRootRoute({
       signal: abortController.signal,
     });
 
-    const data = await response.json();
+    const data: Mailbox[] = await response.json();
 
     return data;
   },
