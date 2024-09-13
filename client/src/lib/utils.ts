@@ -113,3 +113,15 @@ export function mapMailboxesToIcons(mailboxes: Mailbox[]) {
 
   return arr;
 }
+
+export function parsePathname(pathname: string) {
+  if (pathname.includes("%5B")) pathname = pathname.replace("%5B", "[");
+
+  if (pathname.includes("%5D")) pathname = pathname.replace("%5D", "]");
+
+  if (pathname.includes("%2F")) pathname = pathname.replace("%2F", "/");
+
+  if (pathname.includes("%20")) pathname = pathname.replace("%20", " ");
+
+  return pathname;
+}
