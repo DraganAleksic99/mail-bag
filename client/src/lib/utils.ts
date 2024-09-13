@@ -18,6 +18,12 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function capitalizeString([firstLetter, ...rest]: string) {
+  if (rest.includes("/")) {
+    [firstLetter, ...rest] = rest.splice(rest.findIndex(char => char === "/") + 1);
+
+    return firstLetter.toUpperCase() + rest.join("");
+  }
+
   return firstLetter.toUpperCase() + rest.join("");
 }
 
