@@ -16,7 +16,7 @@ export function MailboxesSidebarSkeleton() {
       </div>
       <ScrollArea className="h-[calc(100vh-80px)]">
         <div className="space-y-2 p-4">
-          {Array.from({ length: 10 }).map((_, i) => (
+          {Array.from({ length: 15 }).map((_, i) => (
             <Skeleton key={i} className="text-transparent">
             <Button
               variant="ghost"
