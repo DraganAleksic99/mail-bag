@@ -1,5 +1,6 @@
 const ImapClient = require("emailjs-imap-client");
 import { IServerInfo } from "../utils/ServerInfo";
+import { ParsedMail, simpleParser } from "mailparser";
 
 export interface IImapClient extends Record<string, any> {}
 
@@ -124,5 +125,23 @@ export class Worker {
     });
 
     return finalMessages;
+  }
+
+  public async getMessageBody(
+    callOptions: ICallOptions
+  ): Promise<string | undefined> {
+    const client: IImapClient = await this.connectToServer();
+    const messages: any[] = await client.listMessages(
+      callOptions.mailbox,
+      callOptions.id,
+      ["body[]"],
+      { byUid: true }
+    );
+
+    const parsed: ParsedMail = await simpleParser(messages[0]["body[]"]);
+
+    await client.close();
+
+    return parsed.text;
   }
 }

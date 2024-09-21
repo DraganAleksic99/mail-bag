@@ -18,4 +18,20 @@ const listMessages = async (req: Request, res: Response) => {
   }
 };
 
-export { listMessages };
+const listMessage = async (req: Request, res: Response) => {
+  const { mailbox, folder, id } = req.params;
+
+  try {
+    const imapWorker: IMAP.Worker = new IMAP.Worker(serverInfo);
+    const messageBody: string | undefined = await imapWorker.getMessageBody({
+      mailbox: `${capitalizeParameter(mailbox)}${folder ? "/" + capitalizeParameter(folder) : ""}`,
+      id: parseInt(id, 10),
+    });
+
+    res.status(200).json(messageBody);
+  } catch (error) {
+    res.send(`Error: \n ${error}`);
+  }
+}
+
+export { listMessages, listMessage };
