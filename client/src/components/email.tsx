@@ -8,11 +8,11 @@ import { ScrollArea } from "./ui/scroll-area";
 export function Email() {
   const data = Route.useLoaderData();
   const { email } = useRouterState({ select: (state) => state.location.state });
-  const headerRef = useRef<null | HTMLDivElement>(null);
-  const [headerHeight, setHeaderHeight] = useState("");
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
 
   useEffect(() => {
-    setHeaderHeight(`${headerRef.current?.offsetHeight}`);
+    if (headerRef.current) setHeaderHeight(headerRef.current?.offsetHeight);
   }, [])
 
   const initials = email?.from
@@ -34,8 +34,8 @@ export function Email() {
             </div>
           </div>
         </CardHeader>
-      <ScrollArea className={`h-[calc(100%-${headerHeight}px)] w-full`}>
-        <CardContent className="p-6">
+      <ScrollArea style={{ height: `calc(100% - ${headerHeight}px)`}}>
+        <CardContent className="p-6 pt-0">
           <div>
             {data.split("\n").map((paragraph, index) => (
               paragraph.startsWith("https") ? undefined : <p key={index}>{paragraph}</p>
