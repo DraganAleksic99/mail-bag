@@ -34,4 +34,22 @@ const listMessage = async (req: Request, res: Response) => {
   }
 }
 
-export { listMessages, listMessage };
+const deleteMessage = async (req: Request, res: Response) => {
+  const { mailbox, folder, id } = req.params;
+  
+  try {
+    const imapWorker: IMAP.Worker = new IMAP.Worker(serverInfo);
+    await imapWorker.deleteMessage({
+      mailbox: `${capitalizeParameter(mailbox)}${folder ? "/" + capitalizeParameter(folder) : ""}`,
+      id: parseInt(id, 10),
+    });
+
+    res.status(200).json({
+      message: "Email successfully deleted."
+    });
+  } catch (error) {
+    res.send(`Error: \n ${error}`);
+  }
+} 
+
+export { listMessages, listMessage, deleteMessage };

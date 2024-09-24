@@ -144,4 +144,14 @@ export class Worker {
 
     return parsed.text;
   }
+
+  public async deleteMessage(callOptions: ICallOptions): Promise<any> {
+    const client: IImapClient = await this.connectToServer();
+
+    await client.deleteMessages(callOptions.mailbox, callOptions.id, {
+      byUid: true,
+    });
+
+    await client.close();
+  }
 }
