@@ -28,7 +28,6 @@ export const Route = createFileRoute("/mailboxes/$mailboxId")({
       mailboxId,
     };
   },
-  staleTime: Infinity,
   pendingMs: 500,
   wrapInSuspense: true,
   component: Mailbox,

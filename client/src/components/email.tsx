@@ -1,19 +1,35 @@
-import { useEffect, useRef, useState } from "react";
-import { useRouterState } from "@tanstack/react-router";
+import { useLayoutEffect, useRef, useState } from "react";
+import { useRouterState, useNavigate } from "@tanstack/react-router";
 import { Route } from "@/routes/messages/$mailbox/$emailId";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "./ui/scroll-area";
+import { Trash2 } from "lucide-react";
 
 export function Email() {
-  const data = Route.useLoaderData();
+  const { data, mailbox } = Route.useLoaderData();
   const { email } = useRouterState({ select: (state) => state.location.state });
   const headerRef = useRef<HTMLDivElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const navigate = useNavigate();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (headerRef.current) setHeaderHeight(headerRef.current?.offsetHeight);
-  }, [])
+  }, []);
+
+  const deleteEmail = async () => {
+    const response = await fetch(
+      `http://localhost:80/messages/${mailbox}/${email?.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    const { message } = await response.json();
+    console.log(message);
+    navigate({ to: "/mailboxes/$mailboxId", params: { mailboxId: mailbox } });
+  };
 
   const initials = email?.from
     .split(" ")
@@ -22,24 +38,33 @@ export function Email() {
     .toUpperCase();
 
   return (
-    <Card className="max-w-2xl mx-auto h-full w-full">
-        <CardHeader ref={headerRef} className="flex flex-row items-center gap-4">
-          <Avatar className="w-12 h-12">
-            <AvatarFallback>{initials}</AvatarFallback>
-          </Avatar>
-          <div className="flex-1">
-            <CardTitle className="text-xl">{email?.subject}</CardTitle>
-            <div className="text-sm text-muted-foreground">
-              From: {email?.from} • {email?.date}
-            </div>
+    <Card className="max-w-2xl mx-auto h-full w-full rounded-md">
+      <CardHeader ref={headerRef} className="flex flex-row items-center gap-4">
+        <Avatar className="w-12 h-12">
+          <AvatarFallback>{initials}</AvatarFallback>
+        </Avatar>
+        <div className="flex-1">
+          <CardTitle className="text-xl">{email?.subject}</CardTitle>
+          <div className="text-sm text-muted-foreground pt-1">
+            From: {email?.from} • {email?.date}
           </div>
-        </CardHeader>
-      <ScrollArea style={{ height: `calc(100% - ${headerHeight}px)`}}>
+          <div className="pt-5">
+            <Button className="mr-4" variant="outline" onClick={deleteEmail}>
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </CardHeader>
+      <ScrollArea style={{ height: `calc(100% - ${headerHeight}px)` }}>
         <CardContent className="p-6 pt-0">
           <div>
-            {data.split("\n").map((paragraph, index) => (
-              paragraph.startsWith("https") ? undefined : <p key={index}>{paragraph}</p>
-            ))}
+            {data
+              .split("\n")
+              .map((paragraph, index) =>
+                paragraph.startsWith("https") ? undefined : (
+                  <p key={index}>{paragraph}</p>
+                )
+              )}
           </div>
         </CardContent>
       </ScrollArea>
