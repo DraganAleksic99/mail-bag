@@ -7,9 +7,11 @@ import { Route } from "@/routes/mailboxes/$mailboxId";
 import { capitalizeString } from "@/lib/utils";
 
 export const numOfEmails = atom<null | number>(0);
+export const emailIdAtom = atom<null | string>(null);
 
 export function Mailbox() {
   const setEmailCount = useSetAtom(numOfEmails);
+  const setEmailId = useSetAtom(emailIdAtom);
   const { data: emails, mailboxId } = Route.useLoaderData();
 
   useEffect(() => {
@@ -32,8 +34,10 @@ export function Mailbox() {
                 from,
                 date,
                 subject,
+                id,
               }
             }}
+            onClick={() => setEmailId(id)}
           >
             <div className="flex items-center gap-4 p-4 border-b transition-colors hover:bg-accent">
               <Avatar className="flex-shrink-0">

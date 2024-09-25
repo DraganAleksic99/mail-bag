@@ -15,6 +15,7 @@ declare module "@tanstack/react-router" {
       from: string;
       date: string;
       subject: string;
+      id: string;
     }
   }
 }
