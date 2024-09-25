@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Email } from '@/components/email';
+import { EmailSkeleton } from '@/components/email-skeleton';
 
 export const Route = createFileRoute('/messages/$mailbox/$emailId')({
   loader: async ({ params: { mailbox, emailId }, abortController }) => {
@@ -21,4 +22,5 @@ export const Route = createFileRoute('/messages/$mailbox/$emailId')({
     };
   },
   component: Email,
-})
+  pendingComponent: EmailSkeleton,
+});
