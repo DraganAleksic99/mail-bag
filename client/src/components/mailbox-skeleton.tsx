@@ -22,12 +22,12 @@ export function MailboxSkeleton() {
             <div className="flex-grow min-w-0">
               <div className="flex items-center justify-between mb-1">
                 <Skeleton className="w-full">
-                  <span className="font-semibold truncate text-transparent">
+                  <span className="font-semibold text-transparent">
                     xxxxx xxxxxxxx
                   </span>
                 </Skeleton>
               </div>
-              <div className="text-sm font-medium mb-1 truncate text-transparent">
+              <div className="text-sm font-medium mb-1 text-transparent">
                 <Skeleton className="max-w-fit">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste
                   natus assumenda velit, modi tempora voluptatem repellat illum

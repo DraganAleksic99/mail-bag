@@ -38,7 +38,7 @@ export function Email() {
     .toUpperCase();
 
   return (
-    <Card className="max-w-2xl mx-auto h-full w-full rounded-md">
+    <Card className="max-h-screen max-w-2xl mx-auto h-full w-full min-w-full rounded-md">
       <CardHeader ref={headerRef} className="flex flex-row items-center gap-4">
         <Avatar className="w-12 h-12">
           <AvatarFallback>{initials}</AvatarFallback>
@@ -56,13 +56,12 @@ export function Email() {
         </div>
       </CardHeader>
       <ScrollArea style={{ height: `calc(100% - ${headerHeight}px)` }}>
-        <CardContent className="p-6 pt-0">
-          <div>
+        <CardContent className="p-6 pt-0 max-w-[616px] whitespace-normal break-words">
+          <div className="max-w-[592px]">
             {data
               .split("\n")
-              .map((paragraph, index) =>
-                paragraph.startsWith("https") ? undefined : (
-                  <p key={index}>{paragraph}</p>
+              .map((paragraph, index) => (
+                  <p key={index} className="">{paragraph}</p>
                 )
               )}
           </div>

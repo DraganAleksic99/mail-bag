@@ -13,10 +13,12 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
   const emailId = useAtomValue(emailIdAtom);
 
   return (
-    <div className="w-full h-screen bg-background border-r">
-      <div className="p-4">
-        <Button className="w-full justify-start gap-2 text-base">
-          <Mail className="w-5 h-5" />
+    <div className="w-full h-screen bg-background border-r border-l rounded-lg">
+      <div className="p-4 pb-0">
+        <Button className="w-full justify-start gap-2 text-base" variant="outline">
+          <div className="rounded-full bg-accent h-7 w-7 flex items-center justify-center">
+            <Mail className="w-4 h-4" />
+          </div>
           Compose
         </Button>
       </div>
@@ -41,10 +43,10 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
             >
               <Button
                 variant="ghost"
-                className="w-full justify-start gap-3 text-base font-normal"
+                className="w-full justify-start gap-3 text-base"
               >
                 {mailbox.icon && (
-                  <mailbox.icon className="w-5 h-5 text-muted-foreground" />
+                  <mailbox.icon className="w-6 h-6 text-muted-foreground" />
                 )}
                 {mailbox.name}
                 {(`/mailboxes/${mailbox.path}` === pathname ||

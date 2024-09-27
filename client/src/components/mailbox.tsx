@@ -53,10 +53,10 @@ export function Mailbox() {
               </Avatar>
               <div className="flex-grow min-w-0">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="font-semibold truncate">{from}</span>
+                  <span className="font-semibold">{from}</span>
                   <span className="text-sm text-muted-foreground">{date}</span>
                 </div>
-                <div className="text-sm font-medium mb-1 truncate">
+                <div className="text-sm font-medium mb-1">
                   {subject}
                 </div>
               </div>
