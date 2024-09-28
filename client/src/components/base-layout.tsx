@@ -1,6 +1,7 @@
 import { Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { MailboxesSidebar } from "./mailboxes-sidebar";
+import { ContactsSidebar } from "./contacts-sidebar";
 import { Route } from "@/routes/__root";;
 
 export function BaseLayout() {
@@ -17,7 +18,7 @@ export function BaseLayout() {
             <Outlet />
           </div>
           <div className="w-[30%] min-h-full overflow-y-auto flex flex-col">
-            <h1>Hi!</h1>
+            <ContactsSidebar />
           </div>
         </div>
       </main>
