@@ -1,5 +1,5 @@
 import { Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { Toaster } from "react-hot-toast";
 import { MailboxesSidebar } from "./mailboxes-sidebar";
 import { ContactsSidebar } from "./contacts-sidebar";
 import { Route } from "@/routes/__root";;
@@ -22,7 +22,7 @@ export function BaseLayout() {
           </div>
         </div>
       </main>
-      <TanStackRouterDevtools position="bottom-right" />
+      <Toaster />
     </>
   );
 }

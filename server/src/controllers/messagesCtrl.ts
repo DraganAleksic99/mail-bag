@@ -48,7 +48,7 @@ const deleteMessage = async (req: Request, res: Response) => {
       message: "Email successfully deleted."
     });
   } catch (error) {
-    res.send(`Error: \n ${error}`);
+    res.status(400).json(`Error: \n ${error}`);
   }
 } 
 
