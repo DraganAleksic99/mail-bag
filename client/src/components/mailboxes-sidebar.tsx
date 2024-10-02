@@ -15,7 +15,10 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
   return (
     <div className="w-full h-screen bg-background border-r border-l rounded-lg">
       <div className="p-4 pb-0">
-        <Button className="w-full justify-start gap-2 text-base" variant="outline">
+        <Button
+          className="w-full justify-start gap-2 text-base"
+          variant="outline"
+        >
           <div className="rounded-full bg-accent h-7 w-7 flex items-center justify-center">
             <Mail className="w-4 h-4" />
           </div>
@@ -30,7 +33,7 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
               className={cn(
                 "block rounded-md",
                 `${`/mailboxes/${mailbox.path}` === parsePathname(pathname) && "bg-accent"}`,
-                `${`/messages/${mailbox.path}/${emailId}` === parsePathname(pathname) && "bg-accent"}`,
+                `${`/messages/${mailbox.path}/${emailId}` === parsePathname(pathname) && "bg-accent"}`
               )}
               to="/mailboxes/$mailboxId"
               params={{ mailboxId: mailbox.path }}
@@ -46,7 +49,13 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
                 className="w-full justify-start gap-3 text-base"
               >
                 {mailbox.icon && (
-                  <mailbox.icon className="w-6 h-6 text-muted-foreground" />
+                  <mailbox.icon
+                    className={cn(
+                      "w-6 h-6 text-muted-foreground",
+                      `${`/mailboxes/${mailbox.path}` === parsePathname(pathname) && "stroke-black"}`,
+                      `${`/messages/${mailbox.path}/${emailId}` === parsePathname(pathname) && "stroke-black"}`
+                    )}
+                  />
                 )}
                 {mailbox.name}
                 {(`/mailboxes/${mailbox.path}` === pathname ||
