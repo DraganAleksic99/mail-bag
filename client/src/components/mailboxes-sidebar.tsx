@@ -16,7 +16,7 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
     <div className="w-full h-screen bg-background border-r border-l rounded-lg">
       <div className="p-4 pb-0">
         <Button
-          className="w-full justify-start gap-2 text-base"
+          className="w-full justify-start gap-2 text-base h-10"
           variant="outline"
         >
           <div className="rounded-full bg-accent h-7 w-7 flex items-center justify-center">

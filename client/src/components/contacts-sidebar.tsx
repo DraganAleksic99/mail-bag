@@ -97,7 +97,7 @@ export function ContactsSidebar() {
     <div className="w-full h-screen border-l border-r rounded-lg border-gray-200 dark:border-gray-800">
       <div className="p-4">
         <Button
-          className="w-full justify-start gap-2 text-base flex items-center space-x-2"
+          className="w-full justify-start gap-2 text-base flex items-center space-x-2 h-10"
           variant="outline"
         >
           <div className="rounded-full bg-accent h-7 w-7 flex items-center justify-center">
@@ -106,7 +106,7 @@ export function ContactsSidebar() {
             Add New Contact
         </Button>
       </div>
-      <ScrollArea className="h-[calc(100vh-68px)]">
+      <ScrollArea className="h-[calc(100vh-72px)]">
         <nav className="p-4 pt-0">
           {contacts.map((contact) => (
             <div

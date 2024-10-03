@@ -6,9 +6,9 @@ export function ContactsSidebarSkeleton() {
   return (
     <div className="w-full h-screen border-l border-r rounded-lg border-gray-200 dark:border-gray-800">
       <div className="p-4">
-        <Skeleton className="h-9 w-full rounded-md mr-4" />
+        <Skeleton className="h-10 w-full rounded-md mr-4" />
       </div>
-      <ScrollArea className="h-[calc(100vh-68px)]">
+      <ScrollArea className="h-[calc(100vh-72px)]">
         <nav className="p-4 pt-0 w-full">
           {Array.from({ length: 15 }).map(() => (
             <div className="flex items-center p-2 rounded-lg hover:bg-accent transition-colors relative mb-2 w-full">
