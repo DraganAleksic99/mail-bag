@@ -1,5 +1,6 @@
 import { Outlet } from "@tanstack/react-router";
 import { MailboxesSidebarSkeleton } from "./mailboxes-sidebar-skeleton";
+import { ContactsSidebarSkeleton } from "./contacts-sidebar-skeleton";
 
 export function BaseLayoutSkeleton() {
   return (
@@ -13,7 +14,7 @@ export function BaseLayoutSkeleton() {
             <Outlet />
           </div>
           <div className="w-[30%] min-h-full overflow-y-auto flex flex-col">
-            <h1>Hi!</h1>
+            <ContactsSidebarSkeleton />
           </div>
         </div>
       </main>

@@ -1,28 +1,28 @@
 import { Outlet } from "@tanstack/react-router";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "@/components/ui/toaster"
 import { MailboxesSidebar } from "./mailboxes-sidebar";
 import { ContactsSidebar } from "./contacts-sidebar";
 import { Route } from "@/routes/__root";;
 
 export function BaseLayout() {
-  const data = Route.useLoaderData();
+  const { mailboxes, contacts} = Route.useLoaderData();
 
   return (
     <>
       <main>
         <div className="min-h-screen] h-screen flex gap-3">
           <div className="w-1/5 min-h-full flex flex-col">
-            <MailboxesSidebar mailboxes={data} />
+            <MailboxesSidebar mailboxes={mailboxes} />
           </div>
           <div className="w-1/2 min-h-full">
             <Outlet />
           </div>
           <div className="w-[30%] min-h-full overflow-y-auto flex flex-col">
-            <ContactsSidebar />
+            <ContactsSidebar contacts={contacts} />
           </div>
         </div>
-      </main>
       <Toaster />
+      </main>
     </>
   );
 }
