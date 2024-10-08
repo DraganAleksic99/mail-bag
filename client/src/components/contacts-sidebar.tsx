@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "@tanstack/react-router";
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -17,12 +17,12 @@ import { Label } from "@/components/ui/label";
 import { Mail, Trash2, PlusIcon } from "lucide-react";
 
 export interface IContact {
-  _id?: number;
+  _id?: string;
   name: string;
   email: string;
 }
 
-export function ContactsSidebar({ contacts }: { contacts: IContact[]}) {
+export function ContactsSidebar({ contacts }: { contacts: IContact[] }) {
   const { toast } = useToast();
   const router = useRouter();
   const [name, setName] = useState("");
@@ -36,6 +36,43 @@ export function ContactsSidebar({ contacts }: { contacts: IContact[]}) {
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+  };
+
+  const handleContactDelete = async (id: string) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`http://localhost:80/contacts/${id}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Could not delete contact. Please try again!");
+      }
+
+      const { message } = await response.json();
+
+      router.invalidate();
+
+      toast({
+        title: message,
+      });
+
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          setIsLoading(false);
+          resolve(true);
+        }, 500);
+      })
+    } catch (error) {
+      setIsLoading(false);
+      toast({
+        title: (error as Record<string, string>).message,
+        variant: "destructive",
+      });
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -179,8 +216,25 @@ export function ContactsSidebar({ contacts }: { contacts: IContact[]}) {
                   variant="outline"
                   size="icon"
                   className="h-9 w-9 hover:bg-accent"
+                  onClick={() => handleContactDelete(contact._id!)}
+                  disabled={isLoading}
                 >
-                  <Trash2 className="h-4 w-4" />
+                  {isLoading ? (
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      viewBox="0 0 24 24"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 animate-spin stroke-black"
+                    >
+                      <path d="M12 3v3m6.366-.366-2.12 2.12M21 12h-3m.366 6.366-2.12-2.12M12 21v-3m-6.366.366 2.12-2.12M3 12h3m-.366-6.366 2.12 2.12"></path>
+                    </svg>
+                  ) : (
+                    <Trash2 className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </div>

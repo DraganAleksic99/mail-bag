@@ -39,4 +39,20 @@ export class Worker {
       });
     });
   }
+
+  public deleteContact(ID: string): Promise<string | void> {
+    return new Promise((resolve, reject) => {
+      this.db.remove(
+        { _id: ID },
+        {},
+        (error: Error | null, numRemoved: number) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(String(numRemoved));
+          }
+        }
+      );
+    });
+  }
 }

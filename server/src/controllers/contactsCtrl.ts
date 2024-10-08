@@ -17,11 +17,23 @@ const createContact = async (req: Request, res: Response) => {
     const contactsWorker: Contacts.Worker = new Contacts.Worker();
     const contact: IContact = await contactsWorker.addContact(req.body);
     res.status(200).json({
-      message: "Contact created successfully!"
+      message: "Contact created successfully!",
     });
   } catch (error) {
     res.status(400).json(`Error: \n ${error}`);
   }
 };
 
-export { listContacts, createContact };
+const deleteContact = async (req: Request, res: Response) => {
+  try {
+    const contactsWorker: Contacts.Worker = new Contacts.Worker();
+    await contactsWorker.deleteContact(req.params.id);
+    res.status(200).json({
+      message: "Contact deleted successfully!"
+    });
+  } catch (error) {
+    res.status(400).json(`Error: \n ${error}`);
+  }
+};
+
+export { listContacts, createContact, deleteContact };
