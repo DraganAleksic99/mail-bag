@@ -1,13 +1,16 @@
 import { useState, FormEvent } from "react";
+import { Send, Sparkles, ArrowLeft } from "lucide-react";
+import { useRouterState, useRouter } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Send, Sparkles } from "lucide-react";
 
 export function ComposeEmail() {
+  const { email } = useRouterState({ select: (state) => state.location.state });
+  const router = useRouter();
   const { toast } = useToast();
-  const [to, setTo] = useState("");
+  const [to, setTo] = useState(email?.from || "");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
 
@@ -50,7 +53,12 @@ export function ComposeEmail() {
     <div className="min-h-screen w-full max-w-2xl mx-auto bg-background border rounded-lg shadow-sm">
       <div className="border-b p-4">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold">New Message</h2>
+        <Button
+            variant="outline"
+            onClick={() => router.history.back()}
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
           <div className="flex space-x-2">
             <Button variant="outline">
               <Sparkles className="mr-2 h-4 w-4" />

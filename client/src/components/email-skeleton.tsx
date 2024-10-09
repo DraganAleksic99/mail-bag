@@ -7,25 +7,30 @@ export function EmailSkeleton() {
   return (
     <Skeleton>
       <Card className="max-w-2xl mx-auto h-full w-full rounded-md">
-        <CardHeader className="flex flex-row items-center gap-4 h-40">
-          <Avatar className="w-12 h-12 text-transparent">
-            <AvatarFallback>X</AvatarFallback>
-          </Avatar>
-          <div className="flex-1">
-            <CardTitle className="text-xl text-transparent">
-              <Skeleton>xxxxx xxxxxx xxxxxxx xxxx</Skeleton>
-            </CardTitle>
-            <div className="text-sm text-transparent pt-1 mt-2">
-              <Skeleton>From: xxxxxxxxxxxxx • xxxxxxxxxxxxx</Skeleton>
-            </div>
-            <div className="pt-5 flex items-cente">
-              <Skeleton className="h-9 w-12 rounded-md mr-4" />
-              <Skeleton className="h-9 w-12 rounded-md mr-4" />
-              <Skeleton className="h-9 w-36 rounded-md" />
+        <CardHeader className="p-4 h-[168px]">
+          <div className="flex justify-end">
+            <Skeleton className="h-9 w-12 rounded-md mr-auto" />
+            <Skeleton className="h-9 w-36 rounded-md" />
+          </div>
+          <div className="flex flex-row items-center gap-4 pt-1">
+            <Avatar className="w-12 h-12 text-transparent">
+              <AvatarFallback>X</AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              <CardTitle className="text-xl text-transparent">
+                <Skeleton>xxxxx xxxxxx xxxxxxx xxxx</Skeleton>
+              </CardTitle>
+              <div className="text-sm text-transparent mt-2">
+                <Skeleton>From: xxxxxxxxxxxxx • xxxxxxxxxxxxx</Skeleton>
+              </div>
+              <div className="pt-4 flex items-center">
+                <Skeleton className="h-9 w-12 rounded-md mr-4" />
+                <Skeleton className="h-9 w-12 rounded-md mr-4" />
+              </div>
             </div>
           </div>
         </CardHeader>
-        <ScrollArea className="h-[calc(100vh-170px)]">
+        <ScrollArea className="h-[calc(100vh-170px)] pt-2">
           <CardContent className="p-6 pt-0">
             <div>
               {Array.from({ length: 10 }).map((_, i) => (

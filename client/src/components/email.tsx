@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { useRouterState, useNavigate } from "@tanstack/react-router";
+import { useRouterState, useNavigate, Link } from "@tanstack/react-router";
 import { toast } from "react-hot-toast";
 import { Route } from "@/routes/messages/$mailbox/$emailId";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,6 +27,7 @@ export function Email() {
         `http://localhost:80/messages/${mailbox}/${email?.id}`,
         {
           method: "DELETE",
+          headers: { Accept: "application/json" },
         }
       );
 
@@ -38,7 +39,6 @@ export function Email() {
 
       toast.success(message, { duration: 3000 });
       setIsLoading(false);
-
       navigate({ to: "/mailboxes/$mailboxId", params: { mailboxId: mailbox } });
     } catch (error) {
       setIsLoading(false);
@@ -83,9 +83,11 @@ export function Email() {
               From: {email?.from} • {email?.date}
             </div>
             <div className="pt-4 flex items-center">
-              <Button className="mr-4" variant="outline">
-                <Reply className="h-4 w-4" />
-              </Button>
+              <Link to="/messages/compose" state={{ email }}>
+                <Button className="mr-4" variant="outline">
+                  <Reply className="h-4 w-4" />
+                </Button>
+              </Link>
               <Button
                 className="mr-4"
                 variant="outline"
