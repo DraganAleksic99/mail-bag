@@ -115,7 +115,7 @@ export function ContactsSidebar({ contacts }: { contacts: IContact[] }) {
   };
 
   return (
-    <div className="w-full h-screen border-l border-r rounded-lg border-gray-200 dark:border-gray-800">
+    <div className="w-full h-screen border-l border-r border-t rounded-lg border-gray-200 dark:border-gray-800">
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <div className="p-4">
@@ -182,7 +182,7 @@ export function ContactsSidebar({ contacts }: { contacts: IContact[] }) {
           </form>
         </DialogContent>
       </Dialog>
-      <ScrollArea className="h-[calc(100vh-72px)]">
+      <ScrollArea className="h-[calc(100vh-73px)]">
         <nav className="p-4 pt-0">
           {contacts.map((contact) => (
             <div

@@ -13,19 +13,21 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
   const emailId = useAtomValue(emailIdAtom);
 
   return (
-    <div className="w-full h-screen bg-background border-r border-l rounded-lg">
+    <div className="w-full h-screen bg-background border-r border-l border-t rounded-lg">
       <div className="p-4 pb-0">
-        <Button
-          className="w-full justify-start gap-2 text-base h-10"
-          variant="outline"
-        >
-          <div className="rounded-full bg-accent h-7 w-7 flex items-center justify-center">
-            <Mail className="w-4 h-4" />
-          </div>
-          Compose
-        </Button>
+        <Link to="/messages/compose">
+          <Button
+            className="w-full justify-start gap-2 text-base h-10"
+            variant="outline"
+          >
+            <div className="rounded-full bg-accent h-7 w-7 flex items-center justify-center">
+              <Mail className="w-4 h-4" />
+            </div>
+            Compose
+          </Button>
+        </Link>
       </div>
-      <ScrollArea className="h-[calc(100vh-80px)]">
+      <ScrollArea className="h-[calc(100vh-81px)]">
         <div className="space-y-2 p-4">
           {mapMailboxesToIcons(mailboxes || []).map((mailbox) => (
             <Link
@@ -60,7 +62,8 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
                 {mailbox.name}
                 {(`/mailboxes/${mailbox.path}` === pathname ||
                   `/mailboxes/${mailbox.path}` === parsePathname(pathname) ||
-                  `/messages/${mailbox.path}/${emailId}` === parsePathname(pathname)) && (
+                  `/messages/${mailbox.path}/${emailId}` ===
+                    parsePathname(pathname)) && (
                   <span
                     className={cn(
                       "ml-auto bg-primary text-xs rounded-full px-2 py-1",

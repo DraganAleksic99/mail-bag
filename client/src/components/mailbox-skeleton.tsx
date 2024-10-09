@@ -5,12 +5,12 @@ import { Skeleton } from "./ui/skeleton";
 export function MailboxSkeleton() {
   return (
     <div className="max-h-screen w-full max-w-2xl mx-auto bg-background border rounded-lg shadow-sm">
-      <div className="p-4 border-b">
+      <div className="p-4 py-[18px] border-b">
         <Skeleton className="w-fit">
           <h2 className="text-2xl font-bold text-transparent">xxxxxxx</h2>
         </Skeleton>
       </div>
-      <ScrollArea className="h-[calc(100vh-66px)]">
+      <ScrollArea className="h-[calc(100vh-70px)]">
         {Array.from({ length: 10 }).map((_, i) => (
           <div
             key={i}
