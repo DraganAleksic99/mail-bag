@@ -3,6 +3,7 @@ import {
   listMessages,
   listMessage,
   deleteMessage,
+  createMessage,
 } from "../controllers/messagesCtrl";
 
 const router = Router();
@@ -18,5 +19,7 @@ router
   .route("/messages/:mailbox/:folder/:id")
   .get(listMessage)
   .delete(deleteMessage);
+
+router.post("/messages", createMessage);
 
 export default router;

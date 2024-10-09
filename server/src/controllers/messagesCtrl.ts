@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as IMAP from "../lib/IMAP";
+import * as SMTP from "../lib/SMTP";
 import { serverInfo } from "../utils/ServerInfo";
 import { capitalizeParameter } from "../utils/capitalizeParameter";
 
@@ -50,6 +51,18 @@ const deleteMessage = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(400).json(`Error: \n ${error}`);
   }
-} 
+}
 
-export { listMessages, listMessage, deleteMessage };
+const createMessage = async (req: Request, res: Response) => {
+  try {
+    const smtpWorker: SMTP.Worker = new SMTP.Worker(serverInfo);
+    await smtpWorker.sendMessage(req.body);
+    res.status(200).json({
+      message: "Email successfully sent."
+    });
+  } catch (error) {
+    res.status(400).json(`Error: \n ${error}`);
+  }
+}
+
+export { listMessages, listMessage, deleteMessage, createMessage };
