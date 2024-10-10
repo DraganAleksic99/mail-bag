@@ -10,14 +10,16 @@ export function ContactsSidebarSkeleton() {
       </div>
       <ScrollArea className="h-[calc(100vh-73px)]">
         <nav className="p-4 pt-0 w-full">
-          {Array.from({ length: 15 }).map(() => (
-            <div className="flex items-center p-2 rounded-lg hover:bg-accent transition-colors relative mb-2 w-full">
+          {Array.from({ length: 15 }).map((_, i) => (
+            <div key={i} className="flex items-center p-2 rounded-lg hover:bg-accent transition-colors relative mb-2 w-full">
               <Avatar className="w-12 h-12 text-transparent">
-            <AvatarFallback>X</AvatarFallback>
-          </Avatar>
+                <AvatarFallback>X</AvatarFallback>
+              </Avatar>
               <div className="ml-3 w-full">
                 <Skeleton>
-                  <p className="text-md font-medium text-transparent mb-[2px]">Xxxxxx Xxxxxxx</p>
+                  <p className="text-md font-medium text-transparent mb-[2px]">
+                    Xxxxxx Xxxxxxx
+                  </p>
                 </Skeleton>
                 <Skeleton>
                   <p className="text-sm text-transparent">
