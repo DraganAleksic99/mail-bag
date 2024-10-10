@@ -12,14 +12,13 @@ export function MailboxesSidebarSkeleton() {
         <div className="space-y-2 p-4">
           {Array.from({ length: 15 }).map((_, i) => (
             <Skeleton key={i} className="text-transparent">
-            <Button
-              variant="ghost"
-              className="w-full justify-start gap-3 text-base font-normal"
-            >
-              <div className="w-5 h-5 text-muted-foreground" />
-              xxxxxxx
-            </Button>
-          </Skeleton>
+              <Button
+                variant="ghost"
+                className="w-full justify-start gap-3 text-base font-normal pointer-events-none"
+              >
+                xxxxxxx
+              </Button>
+            </Skeleton>
           ))}
         </div>
       </ScrollArea>
