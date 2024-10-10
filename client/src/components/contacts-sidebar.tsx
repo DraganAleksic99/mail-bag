@@ -15,6 +15,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export interface IContact {
   _id?: string;
@@ -209,38 +214,52 @@ export function ContactsSidebar({ contacts }: { contacts: IContact[] }) {
                   to="/messages/compose"
                   state={{ contactEmail: contact.email }}
                 >
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-9 w-9 hover:bg-accent mr-2"
-                  >
-                    <Mail className="h-4 w-4" />
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-9 w-9 hover:bg-accent mr-2"
+                      >
+                        <Mail className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Send Mail</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </Link>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-9 w-9 hover:bg-accent"
-                  onClick={() => handleContactDelete(contact._id!)}
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <svg
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      viewBox="0 0 24 24"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 animate-spin stroke-black"
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-9 w-9 hover:bg-accent"
+                      onClick={() => handleContactDelete(contact._id!)}
+                      disabled={isLoading}
                     >
-                      <path d="M12 3v3m6.366-.366-2.12 2.12M21 12h-3m.366 6.366-2.12-2.12M12 21v-3m-6.366.366 2.12-2.12M3 12h3m-.366-6.366 2.12 2.12"></path>
-                    </svg>
-                  ) : (
-                    <Trash2 className="h-4 w-4" />
-                  )}
-                </Button>
+                      {isLoading ? (
+                        <svg
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          viewBox="0 0 24 24"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 animate-spin stroke-black"
+                        >
+                          <path d="M12 3v3m6.366-.366-2.12 2.12M21 12h-3m.366 6.366-2.12-2.12M12 21v-3m-6.366.366 2.12-2.12M3 12h3m-.366-6.366 2.12 2.12"></path>
+                        </svg>
+                      ) : (
+                        <Trash2 className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Delete</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
             </div>
           ))}

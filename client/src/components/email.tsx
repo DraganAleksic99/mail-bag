@@ -5,7 +5,12 @@ import { Route } from "@/routes/messages/$mailbox/$emailId";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Trash2, Sparkles, Reply, ArrowLeft } from "lucide-react";
 
 export function Email() {
@@ -56,18 +61,26 @@ export function Email() {
     <Card className="max-h-screen max-w-2xl mx-auto h-full w-full min-w-full rounded-md">
       <CardHeader ref={headerRef} className="p-4">
         <div className="flex justify-end">
-          <Button
-            className="mr-auto"
-            variant="outline"
-            onClick={() =>
-              navigate({
-                to: "/mailboxes/$mailboxId",
-                params: { mailboxId: mailbox },
-              })
-            }
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                className="mr-auto"
+                variant="outline"
+                onClick={() =>
+                  navigate({
+                    to: "/mailboxes/$mailboxId",
+                    params: { mailboxId: mailbox },
+                  })
+                }
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Go Back</p>
+            </TooltipContent>
+          </Tooltip>
+
           <Button variant="outline">
             <Sparkles className="mr-2 h-4 w-4" />
             Summarize with AI
@@ -84,33 +97,47 @@ export function Email() {
             </div>
             <div className="pt-4 flex items-center">
               <Link to="/messages/compose" state={{ email }}>
-                <Button className="mr-4" variant="outline">
-                  <Reply className="h-4 w-4" />
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button className="mr-4" variant="outline">
+                      <Reply className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Reply</p>
+                  </TooltipContent>
+                </Tooltip>
               </Link>
-              <Button
-                className="mr-4"
-                variant="outline"
-                onClick={deleteEmail}
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    viewBox="0 0 24 24"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 animate-spin stroke-black"
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    className="mr-4"
+                    variant="outline"
+                    onClick={deleteEmail}
+                    disabled={isLoading}
                   >
-                    <path d="M12 3v3m6.366-.366-2.12 2.12M21 12h-3m.366 6.366-2.12-2.12M12 21v-3m-6.366.366 2.12-2.12M3 12h3m-.366-6.366 2.12 2.12"></path>
-                  </svg>
-                ) : (
-                  <Trash2 className="h-4 w-4" />
-                )}
-              </Button>
+                    {isLoading ? (
+                      <svg
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        viewBox="0 0 24 24"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 animate-spin stroke-black"
+                      >
+                        <path d="M12 3v3m6.366-.366-2.12 2.12M21 12h-3m.366 6.366-2.12-2.12M12 21v-3m-6.366.366 2.12-2.12M3 12h3m-.366-6.366 2.12 2.12"></path>
+                      </svg>
+                    ) : (
+                      <Trash2 className="h-4 w-4" />
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Delete</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </div>
         </div>
