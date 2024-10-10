@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useRouter } from "@tanstack/react-router";
+import { Mail, Trash2, PlusIcon } from "lucide-react";
+import { useRouter, Link } from "@tanstack/react-router";
 import { useToast } from "@/hooks/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,7 +15,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Mail, Trash2, PlusIcon } from "lucide-react";
 
 export interface IContact {
   _id?: string;
@@ -65,7 +65,7 @@ export function ContactsSidebar({ contacts }: { contacts: IContact[] }) {
           setIsLoading(false);
           resolve(true);
         }, 500);
-      })
+      });
     } catch (error) {
       setIsLoading(false);
       toast({
@@ -205,13 +205,18 @@ export function ContactsSidebar({ contacts }: { contacts: IContact[] }) {
                 </p>
               </div>
               <div className="absolute right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-9 w-9 hover:bg-accent mr-2"
+                <Link
+                  to="/messages/compose"
+                  state={{ contactEmail: contact.email }}
                 >
-                  <Mail className="h-4 w-4" />
-                </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-9 w-9 hover:bg-accent mr-2"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                </Link>
                 <Button
                   variant="outline"
                   size="icon"

@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { Send, Sparkles, ArrowLeft } from "lucide-react";
 import { useRouterState, useRouter } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
@@ -7,12 +7,30 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
 export function ComposeEmail() {
-  const { email } = useRouterState({ select: (state) => state.location.state });
+  const { email, contactEmail } = useRouterState({ select: (state) => state.location.state });
   const router = useRouter();
   const { toast } = useToast();
-  const [to, setTo] = useState(email?.from || "");
+  const [to, setTo] = useState(email?.from || contactEmail || "");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const unsub = router.history.subscribe(() => {
+      const { contactEmail, email } = router.state.location.state;
+
+      if (contactEmail) {
+        setTo(contactEmail);
+      } else if (email) {
+        setTo(email.from);
+      } else {
+        setTo("");
+      }
+    });
+
+    return () => {
+      unsub();
+    }
+  }, [contactEmail, router]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
