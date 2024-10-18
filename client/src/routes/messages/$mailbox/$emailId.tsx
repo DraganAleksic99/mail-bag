@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import DOMpurify from 'dompurify';
 import { Email } from '@/components/email';
 import { EmailSkeleton } from '@/components/email-skeleton';
 
@@ -17,7 +18,7 @@ export const Route = createFileRoute('/messages/$mailbox/$emailId')({
     const data: string = await response.json();
 
     return {
-      data,
+      data: DOMpurify.sanitize(data),
       mailbox
     };
   },

@@ -144,11 +144,7 @@ export function Email() {
       </CardHeader>
       <ScrollArea style={{ height: `calc(100% - ${headerHeight}px)` }}>
         <CardContent className="p-6 pt-0 max-w-[626px] whitespace-normal break-words">
-          <div className="max-w-[592px]">
-            {data.split("\n").map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
+          <div dangerouslySetInnerHTML={{ __html: data}} className="max-w-[592px]"></div>
         </CardContent>
       </ScrollArea>
     </Card>
