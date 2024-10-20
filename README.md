@@ -2,6 +2,12 @@
 
 AI powered email client.
 
+<br>
+
+https://github.com/user-attachments/assets/3d2c5276-da36-4746-b798-2909282aa944
+> Summarizing an email
+
+
 ## Stack
 
 - [TanStack Router](https://tanstack.com/router/latest)
