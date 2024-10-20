@@ -129,7 +129,7 @@ export class Worker {
 
   public async getMessageBody(
     callOptions: ICallOptions
-  ): Promise<string | undefined> {
+  ): Promise<Record<string, unknown>> {
     const client: IImapClient = await this.connectToServer();
     const messages: any[] = await client.listMessages(
       callOptions.mailbox,
@@ -144,7 +144,7 @@ export class Worker {
 
     await client.close();
 
-    return parsed.html || undefined;
+    return { emailAsHtml: parsed.html, emailAsText: parsed.text };
   }
 
   public async deleteMessage(callOptions: ICallOptions): Promise<any> {

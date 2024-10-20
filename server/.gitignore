@@ -6,3 +6,6 @@ dist/
 
 # Server info
 serverInfo.json
+
+# Environment vars
+.env

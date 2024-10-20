@@ -31,7 +31,7 @@ export function EmailSkeleton() {
           </div>
         </CardHeader>
         <ScrollArea className="h-[calc(100vh-170px)] pt-2">
-          <CardContent className="p-6 pt-0">
+          <CardContent className="p-4 pt-0">
             <div>
               {Array.from({ length: 10 }).map((_, i) => (
                 <Skeleton key={i}>

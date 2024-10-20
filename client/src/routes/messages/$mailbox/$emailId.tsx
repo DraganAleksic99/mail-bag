@@ -15,10 +15,11 @@ export const Route = createFileRoute('/messages/$mailbox/$emailId')({
       signal: abortController.signal,
     });
 
-    const data: string = await response.json();
+    const { emailAsHtml, emailAsText }: Record<string, string> = await response.json();
 
     return {
-      data: DOMpurify.sanitize(data),
+      emailAsHtml: DOMpurify.sanitize(emailAsHtml),
+      emailAsText: emailAsText,
       mailbox
     };
   },

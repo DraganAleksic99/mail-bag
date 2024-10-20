@@ -24,7 +24,7 @@ const listMessage = async (req: Request, res: Response) => {
 
   try {
     const imapWorker: IMAP.Worker = new IMAP.Worker(serverInfo);
-    const messageBody: string | undefined = await imapWorker.getMessageBody({
+    const messageBody: Record<string, unknown> = await imapWorker.getMessageBody({
       mailbox: `${capitalizeParameter(mailbox)}${folder ? "/" + capitalizeParameter(folder) : ""}`,
       id: parseInt(id, 10),
     });

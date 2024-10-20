@@ -11,19 +11,67 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Trash2, Sparkles, Reply, ArrowLeft } from "lucide-react";
+import { Trash2, Sparkles, Reply, ArrowLeft, Bot, X } from "lucide-react";
 
 export function Email() {
-  const { data, mailbox } = Route.useLoaderData();
+  const { emailAsHtml, emailAsText, mailbox } = Route.useLoaderData();
   const { email } = useRouterState({ select: (state) => state.location.state });
   const headerRef = useRef<HTMLDivElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [emailSummary, setEmailSummary] = useState("");
+  const [isSummarized, setIsSummarized] = useState(false);
   const navigate = useNavigate({ from: "/messages/$mailbox/$emailId" });
 
   useLayoutEffect(() => {
     if (headerRef.current) setHeaderHeight(headerRef.current?.offsetHeight);
   }, []);
+
+  const handleSummarizeEmail = async () => {
+    if (emailSummary) {
+      setIsSummarized(true);
+      return;
+    }
+
+    setIsSummarized(true);
+    setEmailSummary("Summarizing your email...");
+
+    try {
+      const response = await fetch(`http://localhost:80/email/summary`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: emailAsText }),
+      });
+
+      setEmailSummary("");
+
+      if (!response.body) throw new Error("No response body");
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split("\n");
+
+        for (const line of lines) {
+          if (line.startsWith("0:")) {
+            const content = JSON.parse(line.slice(2));
+            setEmailSummary((prev) => prev + content);
+          }
+        }
+      }
+    } catch (error) {
+      setIsSummarized(false);
+      toast.error((error as Record<string, string>).message);
+    }
+  };
 
   const deleteEmail = async () => {
     setIsLoading(true);
@@ -80,8 +128,11 @@ export function Email() {
               <p>Go Back</p>
             </TooltipContent>
           </Tooltip>
-
-          <Button variant="outline">
+          <Button
+            variant="outline"
+            onClick={handleSummarizeEmail}
+            disabled={isSummarized}
+          >
             <Sparkles className="mr-2 h-4 w-4" />
             Summarize with AI
           </Button>
@@ -143,8 +194,33 @@ export function Email() {
         </div>
       </CardHeader>
       <ScrollArea style={{ height: `calc(100% - ${headerHeight}px)` }}>
-        <CardContent className="p-6 pt-0 max-w-[626px] whitespace-normal break-words">
-          <div dangerouslySetInnerHTML={{ __html: data}} className="max-w-[592px]"></div>
+        <CardContent className="p-2 pt-0 max-w-[626px] whitespace-normal break-words">
+          {isSummarized && (
+            <div className="flex flex-row items-center gap-4 px-2">
+              <Avatar className="w-12 h-12">
+                <AvatarFallback>
+                  <Sparkles className="h-4 w-4" />
+                </AvatarFallback>
+              </Avatar>
+              <div className="w-full">
+                <CardTitle className="text-xl flex justify-between pb-2">
+                  <div className="flex items-center gap-x-2">
+                    <Bot />
+                    AI Summary
+                  </div>
+                  <Button variant="outline" onClick={() => setIsSummarized(false)}>
+                    <X className="h-4 w-4" />
+                  </Button>
+                </CardTitle>
+                {!emailSummary && "Summarizing your email..."}
+                {emailSummary}
+              </div>
+            </div>
+          )}
+          <div
+            dangerouslySetInnerHTML={{ __html: emailAsHtml }}
+            className="max-w-[610px]"
+          ></div>
         </CardContent>
       </ScrollArea>
     </Card>
