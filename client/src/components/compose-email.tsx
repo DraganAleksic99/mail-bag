@@ -8,6 +8,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  TooltipProvider,
 } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 
@@ -78,16 +79,18 @@ export function ComposeEmail() {
     <div className="min-h-screen w-full max-w-2xl mx-auto bg-background border rounded-lg shadow-sm">
       <div className="border-b p-4">
         <div className="flex justify-between items-center">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="outline" onClick={() => router.history.back()}>
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Go Back</p>
-            </TooltipContent>
-          </Tooltip>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" onClick={() => router.history.back()}>
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Go Back</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <div className="flex space-x-2">
             <Button variant="outline">
               <Sparkles className="mr-2 h-4 w-4" />
