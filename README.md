@@ -7,6 +7,10 @@ AI powered email client.
 https://github.com/user-attachments/assets/3d2c5276-da36-4746-b798-2909282aa944
 > Summarizing an email
 
+<br>
+
+https://github.com/user-attachments/assets/85e96fc6-b61a-43ba-b19f-824883d774ab
+> Composing an email
 
 ## Stack
 
