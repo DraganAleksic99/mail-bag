@@ -1,5 +1,6 @@
-import { useState, FormEvent, useEffect } from "react";
-import { Send, Sparkles, ArrowLeft } from "lucide-react";
+import { useState, FormEvent, useEffect, useRef } from "react";
+import { flushSync } from "react-dom";
+import { Send, Sparkles, ArrowLeft, X } from "lucide-react";
 import { useRouterState, useRouter } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,6 +22,10 @@ export function ComposeEmail() {
   const [to, setTo] = useState(email?.from || contactEmail || "");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [prompt, setPrompt] = useState("");
+  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const unsub = router.history.subscribe(() => {
@@ -40,8 +45,58 @@ export function ComposeEmail() {
     };
   }, [contactEmail, router]);
 
+  const handleComposeEmail = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const inputPrompt = prompt;
+    setPrompt("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`http://localhost:80/email/compose`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: inputPrompt }),
+      });
+
+      if (!response.body) throw new Error("No response body");
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split("\n");
+
+        for (const line of lines) {
+          if (line.startsWith("a:")) {
+            const content = JSON.parse(line.slice(2));
+            setSubject(content.result.subject);
+            setMessage(content.result.message);
+          }
+        }
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: (error as Record<string, string>).message,
+      });
+    }
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     try {
       const response = await fetch("http://localhost:80/messages", {
         method: "POST",
@@ -92,14 +147,62 @@ export function ComposeEmail() {
             </Tooltip>
           </TooltipProvider>
           <div className="flex space-x-2">
-            <Button variant="outline">
+            <Button
+              variant="outline"
+              onClick={() => {
+                flushSync(() => {
+                  setIsInputVisible(true)
+                })
+                if (inputRef.current) {
+                  inputRef.current.focus();
+                }
+              }}
+              disabled={isInputVisible}
+            >
               <Sparkles className="mr-2 h-4 w-4" />
               Compose with AI
             </Button>
           </div>
         </div>
       </div>
-      <div className="p-6">
+      {isInputVisible && (
+        <div>
+          <form onSubmit={handleComposeEmail} className="flex p-4 pb-2 gap-x-2">
+            <Input
+              type="text"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              required
+              minLength={20}
+              placeholder="Describe an email"
+              className="w-full"
+              ref={inputRef}
+            />
+            <Button variant="outline" type="submit" className="px-4">
+              {isLoading ? (
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 animate-spin stroke-black"
+                >
+                  <path d="M12 3v3m6.366-.366-2.12 2.12M21 12h-3m.366 6.366-2.12-2.12M12 21v-3m-6.366.366 2.12-2.12M3 12h3m-.366-6.366 2.12 2.12"></path>
+                </svg>
+              ) : (
+                "Compose"
+              )}
+            </Button>
+            <Button variant="outline" onClick={() => setIsInputVisible(false)}>
+              <X className="h-4 w-4" />
+            </Button>
+          </form>
+        </div>
+      )}
+      <div className="p-4">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <label

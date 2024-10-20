@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { summarizeEmail } from "../controllers/emailCtrl";
+import { summarizeEmail, composeEmail } from "../controllers/emailCtrl";
 const router = Router();
 
 router.post("/email/summary", summarizeEmail);
+router.post("/email/compose", composeEmail);
 
 export default router;

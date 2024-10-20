@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { useRouterState, useNavigate, Link } from "@tanstack/react-router";
-import { toast } from "react-hot-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Trash2, Sparkles, Reply, ArrowLeft, Bot, X } from "lucide-react";
 import { useAnimatedText } from "@/lib/hooks";
 import { Route } from "@/routes/messages/$mailbox/$emailId";
@@ -24,6 +24,7 @@ export function Email() {
   const animatedEmailSummary = useAnimatedText(emailSummary);
   const [isSummarized, setIsSummarized] = useState(false);
   const navigate = useNavigate({ from: "/messages/$mailbox/$emailId" });
+  const { toast } = useToast();
 
   useLayoutEffect(() => {
     if (headerRef.current) setHeaderHeight(headerRef.current?.offsetHeight);
@@ -68,7 +69,11 @@ export function Email() {
       }
     } catch (error) {
       setIsSummarized(false);
-      toast.error((error as Record<string, string>).message);
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: (error as Record<string, string>).message,
+      });
     }
   };
 
@@ -89,12 +94,19 @@ export function Email() {
 
       const { message } = await response.json();
 
-      toast.success(message, { duration: 3000 });
+      toast({
+        title: message,
+      });
+      
       setIsLoading(false);
       navigate({ to: "/mailboxes/$mailboxId", params: { mailboxId: mailbox } });
     } catch (error) {
       setIsLoading(false);
-      toast.error((error as Record<string, string>).message);
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: (error as Record<string, string>).message,
+      });
     }
   };
 
