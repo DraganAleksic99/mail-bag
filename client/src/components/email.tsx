@@ -1,6 +1,8 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { useRouterState, useNavigate, Link } from "@tanstack/react-router";
 import { toast } from "react-hot-toast";
+import { Trash2, Sparkles, Reply, ArrowLeft, Bot, X } from "lucide-react";
+import { useAnimatedText } from "@/lib/hooks";
 import { Route } from "@/routes/messages/$mailbox/$emailId";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -11,7 +13,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Trash2, Sparkles, Reply, ArrowLeft, Bot, X } from "lucide-react";
 
 export function Email() {
   const { emailAsHtml, emailAsText, mailbox } = Route.useLoaderData();
@@ -20,6 +21,7 @@ export function Email() {
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [emailSummary, setEmailSummary] = useState("");
+  const animatedEmailSummary = useAnimatedText(emailSummary);
   const [isSummarized, setIsSummarized] = useState(false);
   const navigate = useNavigate({ from: "/messages/$mailbox/$emailId" });
 
@@ -34,7 +36,6 @@ export function Email() {
     }
 
     setIsSummarized(true);
-    setEmailSummary("Summarizing your email...");
 
     try {
       const response = await fetch(`http://localhost:80/email/summary`, {
@@ -45,8 +46,6 @@ export function Email() {
         },
         body: JSON.stringify({ email: emailAsText }),
       });
-
-      setEmailSummary("");
 
       if (!response.body) throw new Error("No response body");
 
@@ -212,8 +211,8 @@ export function Email() {
                     <X className="h-4 w-4" />
                   </Button>
                 </CardTitle>
-                {!emailSummary && "Summarizing your email..."}
-                {emailSummary}
+                {isSummarized && !animatedEmailSummary && "Summarizing your email..."}
+                {animatedEmailSummary}
               </div>
             </div>
           )}
