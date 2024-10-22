@@ -1,5 +1,7 @@
+import "dotenv/config";
 import path from "path";
 import fs from "fs";
+const { env } = process;
 
 interface IServerInfo {
   smtp: {
@@ -20,5 +22,8 @@ const rawInfo = fs.readFileSync(
 );
 
 const serverInfo: IServerInfo = JSON.parse(rawInfo);
+
+serverInfo.imap.auth.pass = env.GMAIL_PASS!;
+serverInfo.smtp.auth.pass = env.GMAIL_PASS!;
 
 export { serverInfo, IServerInfo };

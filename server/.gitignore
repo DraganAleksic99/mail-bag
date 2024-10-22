@@ -4,8 +4,5 @@ node_modules/
 # Compiled js
 dist/
 
-# Server info
-serverInfo.json
-
 # Environment vars
 .env
