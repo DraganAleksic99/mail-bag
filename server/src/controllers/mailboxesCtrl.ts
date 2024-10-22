@@ -9,7 +9,7 @@ const listMailboxes = async (_: Request, res: Response) => {
 
     res.status(200).json(mailboxes);
   } catch (error) {
-    res.send(`Error: \n ${error}`);
+    res.status(400).json({ error: `Error: \n ${error}` });
   }
 };
 

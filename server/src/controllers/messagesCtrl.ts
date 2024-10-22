@@ -15,7 +15,7 @@ const listMessages = async (req: Request, res: Response) => {
 
     res.status(200).json(messages);
   } catch (error) {
-    res.send(`Error: \n ${error}`);
+    res.status(400).json({ error: `Error: \n ${error}` });
   }
 };
 
@@ -31,7 +31,7 @@ const listMessage = async (req: Request, res: Response) => {
 
     res.status(200).json(messageBody);
   } catch (error) {
-    res.send(`Error: \n ${error}`);
+    res.status(400).json({ error: `Error: \n ${error}` });
   }
 }
 
@@ -49,7 +49,7 @@ const deleteMessage = async (req: Request, res: Response) => {
       message: "Email successfully deleted."
     });
   } catch (error) {
-    res.status(400).json(`Error: \n ${error}`);
+    res.status(400).json({ error: `Error: \n ${error}` });
   }
 }
 
@@ -61,7 +61,7 @@ const createMessage = async (req: Request, res: Response) => {
       message: "Email successfully sent."
     });
   } catch (error) {
-    res.status(400).json(`Error: \n ${error}`);
+    res.status(400).json({ error: `Error: \n ${error}` });
   }
 }
 

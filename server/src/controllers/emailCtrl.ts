@@ -16,7 +16,7 @@ const summarizeEmail = async (req: Request, res: Response) => {
     
       result.pipeDataStreamToResponse(res);
   } catch (error) {
-    res.status(400).json(`Error: \n ${error}`); 
+    res.status(400).json({ error: `Error: \n ${error}` }); 
   }
 };
 
@@ -45,7 +45,7 @@ const composeEmail = async (req: Request, res: Response) => {
     
       result.pipeDataStreamToResponse(res);
   } catch (error) {
-    res.status(400).json(`Error: \n ${error}`); 
+    res.status(400).json({ error: `Error: \n ${error}` }); 
   }
 };
 
