@@ -39,7 +39,7 @@ export function Email() {
     setIsSummarized(true);
 
     try {
-      const response = await fetch(`http://localhost:80/email/summary`, {
+      const response = await fetch(`https://mailbag-production-fe5f.up.railway.app/email/summary`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -81,7 +81,7 @@ export function Email() {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:80/messages/${mailbox}/${email?.id}`,
+        `https://mailbag-production-fe5f.up.railway.app/messages/${mailbox}/${email?.id}`,
         {
           method: "DELETE",
           headers: { Accept: "application/json" },

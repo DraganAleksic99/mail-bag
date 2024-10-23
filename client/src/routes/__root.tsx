@@ -11,7 +11,7 @@ export type Mailbox = {
 export const Route = createRootRoute({
   loader: async ({ abortController }) => {
     const [mailboxesResponse, contactsResponse] = await Promise.all([
-      fetch("http://localhost:80/mailboxes", {
+      fetch("https://mailbag-production-fe5f.up.railway.app/mailboxes", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -19,7 +19,7 @@ export const Route = createRootRoute({
         },
         signal: abortController.signal,
       }),
-      fetch("http://localhost:80/contacts", {
+      fetch("https://mailbag-production-fe5f.up.railway.app/contacts", {
         method: "GET",
         headers: {
           Accept: "application/json",

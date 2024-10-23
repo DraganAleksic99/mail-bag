@@ -53,7 +53,7 @@ export function ComposeEmail() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:80/email/compose`, {
+      const response = await fetch(`https://mailbag-production-fe5f.up.railway.app/email/compose`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -98,7 +98,7 @@ export function ComposeEmail() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:80/messages", {
+      const response = await fetch("https://mailbag-production-fe5f.up.railway.app/messages", {
         method: "POST",
         headers: {
           Accept: "application/json",

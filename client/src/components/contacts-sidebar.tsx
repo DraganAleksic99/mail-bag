@@ -46,7 +46,7 @@ export function ContactsSidebar({ contacts }: { contacts: IContact[] }) {
   const handleContactDelete = async (id: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:80/contacts/${id}`, {
+      const response = await fetch(`https://mailbag-production-fe5f.up.railway.app/contacts/${id}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -85,7 +85,7 @@ export function ContactsSidebar({ contacts }: { contacts: IContact[] }) {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:80/contacts", {
+      const response = await fetch("https://mailbag-production-fe5f.up.railway.app/contacts", {
         method: "POST",
         headers: {
           Accept: "application/json",

@@ -6,7 +6,7 @@ import { EmailSkeleton } from '@/components/email-skeleton';
 export const Route = createFileRoute('/messages/$mailbox/$emailId')({
   loader: async ({ params: { mailbox, emailId }, abortController }) => {
 
-    const response = await fetch(`http://localhost:80/messages/${mailbox}/${emailId}`, {
+    const response = await fetch(`https://mailbag-production-fe5f.up.railway.app/messages/${mailbox}/${emailId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
