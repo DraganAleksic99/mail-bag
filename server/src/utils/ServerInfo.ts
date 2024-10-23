@@ -26,4 +26,7 @@ const serverInfo: IServerInfo = JSON.parse(rawInfo);
 serverInfo.imap.auth.pass = env.GMAIL_PASS!;
 serverInfo.smtp.auth.pass = env.GMAIL_PASS!;
 
+serverInfo.imap.auth.user = env.GMAIL_USER!;
+serverInfo.smtp.auth.user = env.GMAIL_USER!;
+
 export { serverInfo, IServerInfo };

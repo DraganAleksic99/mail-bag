@@ -2,11 +2,11 @@
   "smtp": {
     "host": "smtp.gmail.com",
     "port": 587,
-    "auth": { "user": "aleksicdragan574@gmail.com" }
+    "auth": { }
   },
   "imap": {
     "host": "imap.gmail.com",
     "port": 993,
-    "auth": { "user": "aleksicdragan574@gmail.com" }
+    "auth": { }
   }
 }
