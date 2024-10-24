@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mailbox } from "@/components/mailbox";
-import { MailboxSkeleton } from "@/components/mailbox-skeleton";
+import { MailboxSkeleton } from "@/components/skeletons/mailbox-skeleton";
 
 export type TEmail = {
   id: string;

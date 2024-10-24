@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import DOMpurify from 'dompurify';
 import { Email } from '@/components/email';
-import { EmailSkeleton } from '@/components/email-skeleton';
+import { EmailSkeleton } from '@/components/skeletons/email-skeleton';
 
 export const Route = createFileRoute('/messages/$mailbox/$emailId')({
   loader: async ({ params: { mailbox, emailId }, abortController }) => {

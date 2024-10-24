@@ -1,6 +1,6 @@
 import { createRootRoute } from "@tanstack/react-router";
 import { BaseLayout } from "@/components/base-layout";
-import { BaseLayoutSkeleton } from "@/components/base-layout-skeleton";
+import { BaseLayoutSkeleton } from "@/components/skeletons/base-layout-skeleton";
 import { type IContact } from "@/components/contacts-sidebar";
 
 export type Mailbox = {
