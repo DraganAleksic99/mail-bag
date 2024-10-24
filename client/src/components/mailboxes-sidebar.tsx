@@ -2,7 +2,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Link, useLocation } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Mail } from "lucide-react";
+import { Pencil } from "lucide-react";
 import type { Mailbox } from "@/routes/__root";
 import { mapMailboxesToIcons, cn, parsePathname } from "@/lib/utils";
 import { numOfEmails, emailIdAtom } from "./mailbox";
@@ -21,7 +21,7 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
             variant="outline"
           >
             <div className="rounded-full bg-accent h-7 w-7 flex items-center justify-center">
-              <Mail className="w-4 h-4" />
+              <Pencil className="w-4 h-4" />
             </div>
             Compose
           </Button>
