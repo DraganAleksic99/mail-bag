@@ -1,4 +1,4 @@
-# MailBag
+# mail-bag
 
 AI powered email client.
 
@@ -31,18 +31,18 @@ https://github.com/user-attachments/assets/85e96fc6-b61a-43ba-b19f-824883d774ab
 Run the following command to clone the repo:
 
 ```
-git clone https://github.com/DraganAleksic99/MailBag.git
+git clone https://github.com/DraganAleksic99/mail-bag.git
 ```
 
 ### 2. Install dependencies
 
 ```
-cd MailBag/client
+cd mail-bag/client
 npm i
 
 (cd..)
 
-cd MailBag/server
+cd mail-bag/server
 npm i
 ```
 
@@ -55,9 +55,9 @@ cp .env.example .env
 ### 4. Run app locally
 
 ```
-(MailBag/client) npm run dev
+(mail-bag/client) npm run dev
 
-(MailBag/server) npm run dev
+(mail-bag/server) npm run dev
 ```
 
 ### Open in your browser
