@@ -40,7 +40,7 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
               to="/mailboxes/$mailboxId"
               params={{ mailboxId: mailbox.path }}
               onClick={() => {
-                setEmailsCount(0);
+                setEmailsCount(null);
               }}
               activeProps={{
                 className: "bg-accent",
@@ -66,8 +66,8 @@ export function MailboxesSidebar({ mailboxes }: { mailboxes: Mailbox[] }) {
                     parsePathname(pathname)) && (
                   <span
                     className={cn(
-                      "ml-auto bg-primary text-xs rounded-full px-2 py-1",
-                      `${emailsCount === 0 ? "text-transparent animate-pulse" : "text-primary-foreground"}`
+                      "ml-auto bg-primary text-xs rounded-full px-2 py-1 min-h-6 min-w-6",
+                      `${emailsCount === null ? "text-transparent animate-pulse" : "text-primary-foreground"}`
                     )}
                   >
                     {emailsCount}

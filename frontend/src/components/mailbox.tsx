@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Route } from "@/routes/mailboxes/$mailboxId";
 import { capitalizeString } from "@/lib/utils";
 
-export const numOfEmails = atom<null | number>(0);
+export const numOfEmails = atom<null | number>(null);
 export const emailIdAtom = atom<null | string>(null);
 
 export function Mailbox() {
