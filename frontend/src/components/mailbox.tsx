@@ -5,6 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Route } from "@/routes/mailboxes/$mailboxId";
 import { capitalizeString } from "@/lib/utils";
+import { Mail } from "lucide-react";
 
 export const numOfEmails = atom<null | number>(null);
 export const emailIdAtom = atom<null | string>(null);
@@ -24,6 +25,12 @@ export function Mailbox() {
         <h2 className="text-2xl font-bold">{capitalizeString(mailboxId)}</h2>
       </div>
       <ScrollArea className="h-[calc(100vh-70px)]">
+        {emails.length === 0 && (
+          <div className="w-full mt-10 flex flex-col items-center justify-center text-gray-500">
+            <Mail className="w-16 h-16 mb-4" aria-hidden="true" />
+            <p className="text-xl font-semibold">No emails yet</p>
+          </div>
+        )}
         {emails.map(({ id, from, date, subject }) => (
           <Link
             key={id}
@@ -35,7 +42,7 @@ export function Mailbox() {
                 date,
                 subject,
                 id,
-              }
+              },
             }}
             onClick={() => setEmailId(id)}
           >
@@ -56,9 +63,7 @@ export function Mailbox() {
                   <span className="font-semibold">{from}</span>
                   <span className="text-sm text-muted-foreground">{date}</span>
                 </div>
-                <div className="text-sm font-medium mb-1">
-                  {subject}
-                </div>
+                <div className="text-sm font-medium mb-1">{subject}</div>
               </div>
             </div>
           </Link>
