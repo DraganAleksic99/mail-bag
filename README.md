@@ -1,6 +1,12 @@
 # mail-bag
 
-AI powered email client.
+AI powered email client. Generate short summary or compose an email with the help of ai.
+
+## Features
+
+- Read, delete and send emails
+- Add or delete contacts
+- Compose or generate a short email summary with ai
 
 <br>
 
@@ -26,7 +32,7 @@ https://github.com/user-attachments/assets/85e96fc6-b61a-43ba-b19f-824883d774ab
 
 ## Quickstart
 
-### 1. Clone this repository
+### Clone this repository
 
 Run the following command to clone the repo:
 
@@ -34,30 +40,44 @@ Run the following command to clone the repo:
 git clone https://github.com/DraganAleksic99/mail-bag.git
 ```
 
-### 2. Install dependencies
+### Frontend Setup
+
+Navigate to the frontend directory:
 
 ```
-cd mail-bag/client
-npm i
-
-(cd..)
-
-cd mail-bag/server
-npm i
+cd /frontend
 ```
 
-### 3. Fill out secrets
+Install dependencies:
+
+```
+npm install
+```
+
+Start the development server:
+
+```
+npm run dev
+```
+
+### Backend Setup
+
+Navigate to the backend directory:
+
+```
+cd /backend
+```
+
+Install dependencies:
+
+```
+npm install
+```
+
+Fill out secrets
 
 ```
 cp .env.example .env
-```
-
-### 4. Run app locally
-
-```
-(mail-bag/client) npm run dev
-
-(mail-bag/server) npm run dev
 ```
 
 ### Open in your browser
